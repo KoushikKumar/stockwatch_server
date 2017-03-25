@@ -11,7 +11,6 @@ module.exports = function(app) {
                 console.error(err);
             }
             res.json(result);
-            
         });      
     });
     
