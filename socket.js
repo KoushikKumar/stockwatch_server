@@ -4,16 +4,10 @@ module.exports = function(io) {
   io.on('connection', socket => {
     StockController.emitAvaialbleStocks(socket);  
     socket.on('addStock', stock => {
-        StockController.addStock(stock);
-        socket.broadcast.emit('newlyReceivedStock', {
-          stockName:stock
-        });
+        StockController.addStockOnlyIfValid(stock, socket);
     });
     socket.on('removeStock', stock => {
-        StockController.removeStock(stock);
-        socket.broadcast.emit('newlyRemovedStock', {
-            stockName:stock 
-        });
+        StockController.removeAndEmitStock(stock, socket);
     });
   });
 };
