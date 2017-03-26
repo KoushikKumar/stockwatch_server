@@ -30,7 +30,17 @@ exports.availableStocks = function(req, res, next) {
                 if(err){
                     console.error(err);
                 }
-                res.json(result);
+                var resultJson = {};
+                stockData.stocks.forEach((stock) => {
+                    resultJson[stock] = [];
+                    result[stock].forEach((d) => {
+                        var stockInfo = {};
+                        stockInfo["date"] = d["date"];
+                        stockInfo["close"] = d["close"];
+                        resultJson[stock].push(stockInfo);
+                    });
+                });
+                res.json(resultJson);
             });   
        } else {
            res.json({});
